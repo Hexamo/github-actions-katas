@@ -1,0 +1,22 @@
+name: Main workflow
+on: workflow_dispatch
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone down repository
+        uses: actions/checkout@v4
+      - name: upload repo
+        uses: addnab/docker-run-action@v3
+        with: 
+          image: gradle:6-jdk11
+          options: -v {{ github.workspace }}:/
+          run: |
+            ci/build-app.sh
+            ci/unit-test-app.sh
+      - name: run linting
+        uses: super-linter/super-linter/slim@v7.0.0
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISABLE_ERRORS: true
