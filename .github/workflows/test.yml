@@ -6,14 +6,15 @@ jobs:
     steps:
       - name: Clone down repository
         uses: actions/checkout@v4
-      - name: upload repo
+      - name: run build and test
         uses: addnab/docker-run-action@v3
         with: 
           image: gradle:6-jdk11
-          options: -v {{ github.workspace }}:/
+          options: -v ${{ github.workspace }}:/work
           run: |
-            ci/build-app.sh
-            ci/unit-test-app.sh
+            echo "Running Script"
+            /work/ci/build-app.sh
+            /work/ci/unit-test-app.sh
       - name: run linting
         uses: super-linter/super-linter/slim@v7.0.0
         env:
