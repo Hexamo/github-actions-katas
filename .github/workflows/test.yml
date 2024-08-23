@@ -8,7 +8,7 @@ jobs:
         uses: actions/checkout@v4
       - name: run build and test
         uses: addnab/docker-run-action@v3
-        with: 
+        with:
           image: gradle:6-jdk11
           options: -v ${{ github.workspace }}:/home/gradle/app
           run: |
@@ -21,3 +21,11 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISABLE_ERRORS: true
+      - name: build docker
+        run: bash ci/build-docker.sh
+      - name: push docker
+        run: bash ci/push-docker.sh
+      - name: Execute component test
+        run: bash ci/component-test.sh
+      - name: Execute performance test
+        run: bash ci/performance-test.sh
