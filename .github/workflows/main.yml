@@ -61,8 +61,6 @@ jobs:
         with:
           name: code
           path: .
-      - name: print tree
-        run: bash ls -la
       - name: Execute component test
         run: bash ci/component-test.sh
   Performance-test:
