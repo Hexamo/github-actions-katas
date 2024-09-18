@@ -2,10 +2,7 @@ name: Main workflow
 on:
   push:
     branches:
-      - "main"
-  pull_request:
-    branches:
-      - "main"
+      - "dev/**"
 env:
   docker_username: hexamo
   docker_password: ${{ secrets.GITHUB_TOKEN }}
